@@ -1,34 +1,52 @@
 {
   "name": "rlite-calendar",
   "version": "0.1.0",
-  "private": true,
+  "description": "A lightweight and customizable React.js calendar component.",
+  "keywords": [
+    "react",
+    "calendar",
+    "datepicker",
+    "lightweight"
+  ],
+  "author": "KennyOoi <kenny@qutebox.com>",
+  "license": "MIT",
+  "scripts": {
+    "build:demo": "cd demo && yarn build",
+    "prebuild": "rm -rf dist && rm -rf src && cp -r demo/src/main/. src/",
+    "build": "webpack --mode production",
+    "build:report": "webpack --mode development --config webpack.config.dev.js",
+    "serve": "cd demo && yarn start"
+  },
+  "main": "./dist/rlite-calendar.umd.js",
+  "module": "./dist/rlite-calendar.common.js",
+  "unpkg": "./dist/rlite-calendar.umd.min.js",
+  "browser": {
+    "./sfc": "src/Calendar.js"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "classnames": "^2.2.6",
+    "date-fns": "^2.14.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-react": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "cross-env": "^6.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "react-scripts": "3.4.1",
+    "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^3.8.0",
+    "webpack-cli": "^3.3.11"
   }
 }

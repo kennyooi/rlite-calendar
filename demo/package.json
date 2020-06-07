@@ -1,0 +1,25 @@
+{
+  "name": "rlite-calendar-demo",
+  "version": "0.1.0",
+  "description": "A lightweight and customizable React.js calendar component.",
+  "author": "KennyOoi <kenny@qutebox.com>",
+  "private": true,
+  "homepage": "./",
+  "scripts": {
+    "prestart2": "cp -r ../src/ src/main/",
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "date-fns": "^2.14.0",
+    "highlight.js": "^10.0.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1",
+    "react-scripts": "3.4.1"
+  }
+}

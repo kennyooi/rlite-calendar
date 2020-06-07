@@ -1,0 +1,101 @@
+.rl-calendar{
+  display: inline-block;
+  font-size: 1rem;
+  padding: .75em;
+  color: #304455;
+  background-color: #fff;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 3px 38px rgba(14, 42, 71, 0.2);
+  &-row{
+    display: flex;
+    > *{
+      flex: 1;
+    }
+  }
+  // header
+  &-caption,
+  &-prev,
+  &-next{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    height: 3em;
+    cursor: pointer;
+    color: inherit;
+    border-radius: .25em;
+    transition: background .15s;
+    &:hover{
+      background-color: rgba(0,0,0,.07);
+    }
+  }
+  &-caption{
+    flex-grow: 1;
+  }
+  &-prev,
+  &-next{
+    flex: 0 0 3em;
+  }
+  &-prev{
+    order: -1;
+  }
+  // content
+  &-week{
+    font-size: .75em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(0,0,0,.4);
+    padding: .25em;
+  }
+  &-day,
+  &-month,
+  &-year{
+    cursor: pointer;
+    span{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3em;
+      height: 3em;
+      border-radius: 50%;
+      margin: 0 auto;
+      transition: background .15s, color .15s;
+    }
+    &:hover{
+      span{
+        background-color: rgba(0,0,0,.07);
+      }
+    }
+  }
+  &-month,
+  &-year{
+    padding: .5em 0;
+    span{
+      width: 3em * 7 / 4;
+      height: 3em * 7 / 4;
+    }
+  }
+  // states
+  &--out{
+    opacity: .35;
+  }
+  &--today{
+    font-weight: 700;
+    color: #304455;
+  }
+  &--current{
+    span{
+      color: #fff;
+      font-weight: 700;
+      background-color: #304455;
+      &:hover{
+        background-color: #304455;
+      }
+    }
+  }
+  &--invalid{
+    opacity: .35;
+    pointer-events: none;
+  }
+}
