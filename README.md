@@ -1,68 +1,215 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# rLite Calendar
 
-## Available Scripts
+A simple and lightweight, yet flexible calendar component for **React 16.x**, with:
+- no styles dependency or inline styles
+- using browser locale
+- date-fns/esm (calculation methods only)
 
-In the project directory, you can run:
+The intention of this component is to allow you to style your own calendar to suit your website design. See [Styles Guide](#styles-guide) for more detail.
 
-### `yarn start`
+## Demo
+See [Demo Page](https://kennyooi.github.io/rlite-calendar/) for more example.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Get Started
+### Installation
+As usual, install the calendar component NPM package.
+```bash
+npm install rlite-calendar --save
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Next, include the calendar component in your own component.
+```js
+import React, { useState } from 'react';
+import Calendar from 'rlite-calendar';
 
-### `yarn test`
+const Sample = () => {
+  const [date, setDate] = useState(new Date());
+  return (
+    <div>
+      ...
+      <Calendar
+        date={date}
+        onSelectDay={({ day }) => setDate(day)}
+      />
+    </div>
+  );
+}
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Check out [Props Guide](#props-guide) for component available props. 
 
-### `yarn build`
+## Props Guide
+| Prop | Type | Default | Description |
+|--|--|--|--|
+| classPrefix | String | rl-calendar | Calendar CSS class prefix. |
+| date | Date | new Date() | Calendar selected date. |
+| processDate | Function | | Post-processing the final content of rendered date. <br>See [`rdate` Object Guide](#rdate-object-guide) for more detail. |
+| theme | Object | | Styles object of CSS module, see [CSS Module](#css-module) for more detail. |
+| views | Array | ['days', 'months', 'years'] | Enable different view mode on the calendar. <br>*First item will used as default view. |
+| weekStart | Number | 0 | The first day of the week (0-Sunday) |
+| prepend | Node | | Custom node content to add before the calendar |
+| append | Node | | Custom node content to add after the calendar |
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Example code.
+```html
+<Calendar
+  date={date}
+  views={['days']}
+  weekStart={1}
+  processDate={handleProcessDate}
+  append={<div>This will appear before the calendar</div>}
+  prepend={<div>This will appear after the calendar</div>}
+/>
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Events Guide
+| Event | Params | Description |
+|--|--|--|
+| onChangeView | (newView) | View mode changed. |
+| onSelectDay | ({ day, rdate }) | A day has been selected. |
+| onSelectMonth | ({ day, rdate }) | A month has been selected. The `day` indicate the first day of the selected month. |
+| onSelectYear | ({ day, vdate }) | A year has been selected. The `day` indicate the first day of the selected year. |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Example usage.
+```js
+import React, { useState } from 'react';
+import Calendar from 'rlite-calendar';
 
-### `yarn eject`
+const Sample = () => {
+  const [date, setDate] = useState(new Date());
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  const handleSelectDay = ({ day }) => {
+    setDate(day);
+  };
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  return (
+    <div>
+      ...
+      <Calendar
+        date={date}
+        onSelectDay={handleSelectDay}
+      />
+    </div>
+  );
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## `rdate` Object Guide
+`rdate` object is used by component internally for handling what to render on each calendar days, months, and years. However, you can overwrite it through `processDate` prop. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+| Prop | Type | Description |
+|--|--|--|
+| day | Date | Current date in JS Date object |
+| key | Timestamp | Current date in timestamp |
+| type | String | Current content type - day, month, or year |
+| display | String | Display content for current date |
+| classes | String | Injected CSS classes |
+| isToday | Boolean | Is current date today? |
+| isCurrent | Boolean | Is current date same as calendar selected date? |
+| isInvalid | Boolean | Is current date disabled? |
+| isOut | Boolean | Is current date out of calendar month? |
 
-## Learn More
+Example usage.
+```js
+import React, { useState } from 'react';
+import Calendar from 'rlite-calendar';
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const Sample = () => {
+  const [date, setDate] = useState(new Date());
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  const handleProcessDate = (rdate) => {
+    // perform some checking
+    // console.log(rdate.day)
+    // rdate.isInvalid = true;
+    // ...
 
-### Code Splitting
+    // remember to return back the rdate object
+    return rdate;
+  };
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  return (
+    <div>
+      ...
+      <Calendar
+        date={date}
+        onSelectDay={({ day }) => setDate(day)}
+        processDate={handleProcessDate}
+      />
+    </div>
+  );
+}
+```
 
-### Analyzing the Bundle Size
+## Styles Guide
+This component is intentionally for custom calendar theme styling. Hence all CSS classes used within the component are auto-prefixed with `rl-calendar` (can be overwrite through component `classPrefix` prop).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+| CSS class | Description |
+|--|--|
+| `.{classPrefix}` | Calendar root |
+| `.{classPrefix}-row` | Row wrap of calendar |
+| `.{classPrefix}-caption` | Calendar view label |
+| `.{classPrefix}-prev` | Calendar '<' button |
+| `.{classPrefix}-next` | Calendar '>' button |
+| `.{classPrefix}-week` | Week content |
+| `.{classPrefix}-day` | Day content |
+| `.{classPrefix}-month` | Month content |
+| `.{classPrefix}-year` | Year content |
+| `.{classPrefix}--out` | State indicator, content is outside of viewing month |
+| `.{classPrefix}--today` | State indicator, content is today |
+| `.{classPrefix}--current` | State indicator, content is same as selected date |
+| `.{classPrefix}--invalid` | State indicator, content is disabled |
 
-### Making a Progressive Web App
+However, you are free to use the built-in styling if you want (this only work with default `classPrefix`).
+```js
+import 'rlite-calendar/dist/rlite-calendar.min.css';
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## CSS Module
+If you prefer of using CSS module for styling, you can pass in your CSS module object through component `theme` prop.
 
-### Advanced Configuration
+```js
+import React, { useState } from 'react';
+import Calendar from 'rlite-calendar';
+import calendarStyles from './calendar.module.css';
+// you can use other CSS preprocessor also
+// import calendarStyles from './calendar.module.scss';
+// import calendarStyles from './calendar.module.less';
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+const Sample = () => {
+  const [date, setDate] = useState(new Date());
 
-### Deployment
+  return (
+    <div>
+      ...
+      <Calendar
+        date={date}
+        onSelectDay={({ day }) => setDate(day)}
+        classPrefix="calendar"
+        theme={calendarStyles}
+      />
+    </div>
+  );
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Example of `calendar.module.css`
+```css
+.calendar{
+  width: 100%;
+  text-align: center;
+}
+.calendar-row{
+  display: flex;
+}
+.calendar-row > *{
+  flex: 1;
+}
+```
 
-### `yarn build` fails to minify
+## Change Log
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Change logs can be found at [CHANGELOG.md](https://github.com/kennyooi/rlite-calendar/blob/master/CHANGELOG.md)
+
+## License
+
+[MIT](https://github.com/kennyooi/rlite-calendar/blob/master/LICENSE)

@@ -12,13 +12,14 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rm -rf dist && rm -rf src && cp -r demo/src/main/. src/",
-    "build": "yarn build:lib && yarn build:style",
+    "build": "yarn build:lib && yarn build:style && yarn build:demo",
     "build:lib": "webpack --mode=production && cross-env UNMIN=1 webpack --mode=production",
     "build:style": "node-sass --output-style compressed src/styles/default.scss > dist/rlite-calendar.min.css",
     "build:report": "webpack --config webpack.config.dev.js",
     "build:demo": "cd demo && yarn build",
     "demo:init": "cd demo && yarn dev:init",
-    "serve": "cd demo && yarn start"
+    "serve": "cd demo && yarn start",
+    "deploy": "gh-pages -d demo/build"
   },
   "main": "./dist/rlite-calendar.js",
   "unpkg": "./dist/rlite-calendar.min.js",
@@ -47,7 +48,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "webpack": "^4.43.0",
+    "webpack": "4.42.0",
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.11"
   }

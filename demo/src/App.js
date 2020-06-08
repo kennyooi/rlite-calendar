@@ -82,7 +82,7 @@ const App = () => {
           <h2>Flexible and lightweight React calendar component.</h2>
         </div>
         <a href="https://github.com/kennyooi/rlite-calendar/" className="ver" title="Github Page">
-          <img src="https://img.shields.io/github/package-json/v/kennyooi/vlite-calendar?color=blue&style=flat" alt="ver" />
+          <img src="https://img.shields.io/github/package-json/v/kennyooi/rlite-calendar?color=blue&style=flat" alt="ver" />
         </a>
       </header>
       <div className="body">
