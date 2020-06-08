@@ -1,9 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'rlite-calendar': './src/index.js',
+  },
   output: {
-    filename: 'index.js',
+    filename: !process.env.UNMIN ? '[name].min.js' : '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -16,5 +18,8 @@ module.exports = {
         }
       }
     ]
+  },
+  optimization: {
+    minimize: !process.env.UNMIN
   },
 };

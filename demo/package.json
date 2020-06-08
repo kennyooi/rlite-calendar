@@ -6,7 +6,7 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "prestart2": "cp -r ../src/ src/main/",
+    "dev:init": "cp -r ../src/. src/main/",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
