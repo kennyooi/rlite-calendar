@@ -185,10 +185,10 @@ const Calendar = ({
               <div
                 key={item.key}
                 className={classNames(item.classes, {
-                  [`${classPrefix}--out`]: item.isOut,
-                  [`${classPrefix}--today`]: item.isToday,
-                  [`${classPrefix}--current`]: item.isCurrent,
-                  [`${classPrefix}--invalid`]: item.isInvalid,
+                  [getClassName('-out')]: item.isOut,
+                  [getClassName('-today')]: item.isToday,
+                  [getClassName('-current')]: item.isCurrent,
+                  [getClassName('-invalid')]: item.isInvalid,
                 })}
                 onClick={!item.isStatic ? () => handleClick(item) : null}
               >
