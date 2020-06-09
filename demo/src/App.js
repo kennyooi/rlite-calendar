@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import DemoCalendar from './components/DemoCalendar';
 import DemoCalendarBare from './components/DemoCalendarBare';
+import DemoCalendarStyle from './components/DemoCalendarStyle';
 import DemoCalendarDisabled from './components/DemoCalendarDisabled';
 import DemoDatePicker from './components/DemoDatePicker';
 import DemoCalendarInject from './components/DemoCalendarInject';
@@ -16,36 +17,49 @@ const App = () => {
         id: 'demo',
         name: 'Built-In Styles',
         link: '#demo',
+        comp: DemoCalendar,
       },
       {
         id: 'bare',
         name: 'Bare Styles',
         link: '#bare',
+        comp: DemoCalendarBare,
+      },
+      {
+        id: 'style',
+        name: 'Custom Styles',
+        link: '#style',
+        comp: DemoCalendarStyle,
       },
       {
         id: 'disable',
         name: 'Disable Dates',
         link: '#disable',
+        comp: DemoCalendarDisabled,
       },
       {
         id: 'datepicker',
         name: 'DatePicker',
         link: '#datepicker',
+        comp: DemoDatePicker,
       },
       {
         id: 'slots',
         name: 'Slots',
         link: '#slots',
+        comp: DemoCalendarInject,
       },
       {
         id: 'advance',
         name: 'More...',
         link: '#advance',
+        comp: DemoCalendarAdvance,
       },
       {
         id: 'github',
         name: 'Github Page',
         link: 'https://github.com/kennyooi/rlite-calendar/',
+        comp: null,
       },
     ];
   }, []);
@@ -108,12 +122,13 @@ const App = () => {
           </nav>
           <div className="content">
             <div className="content-wrap">
-              <DemoCalendar id="demo" />
-              <DemoCalendarBare id="bare" />
-              <DemoCalendarDisabled id="disable" />
-              <DemoDatePicker id="datepicker" />
-              <DemoCalendarInject id="slots" />
-              <DemoCalendarAdvance id="advance" />
+              {navs
+                .filter(n => n.comp)
+                .map(nav => {
+                  const Comp = nav.comp;
+                  return <Comp key={nav.id} id={nav.id} />;
+                })
+              }
             </div>
           </div>
         </div>
